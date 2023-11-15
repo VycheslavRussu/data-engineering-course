@@ -1,5 +1,6 @@
 import pandas as pd
 import json
+import msgpack
 
 taskDF = pd.read_csv('car_sales.csv')
 
@@ -29,27 +30,37 @@ minCommissionEarned = min(carsDF['Commission Earned'])
 averageCommissionEarned = carsDF['Commission Earned'].mean()
 deviationCommissionEarned = carsDF['Commission Earned'].std()
 
-# 10 лучших продавцов
+# Лучший продавец
 uniqueSales = carsDF['Salesperson'].value_counts()
-bestSales = uniqueSales[0:10].to_dict()
+bestSaler = uniqueSales.idxmax()
 
-# 10 самых частых покупателей
+# Самый частый покупатель
 uniqueCustomers = carsDF['Customer Name'].value_counts()
-bestCustomers = uniqueCustomers[0:10].to_dict()
+bestCustomer = uniqueCustomers.idxmax()
 
-# 10 самых продаваемых брендов автомобилей
+# Самый продаваемый бренд
 uniqueCarMakeres = carsDF['Car Make'].value_counts()
-bestCarMakers = uniqueCarMakeres[0:10].to_dict()
+bestCarMaker = uniqueCarMakeres.idxmax()
 
-# 10 самых продаваемых моделей машин
+# Cамая продаваемая модель
 uniqueCarModels = carsDF['Car Model'].value_counts()
-bestCarModels = uniqueCarModels[0:10].to_dict()
+bestCarModel = uniqueCarModels.idxmax()
 
 answer = {'minYear': int(minYear), 'maxYear': int(maxYear), 'modeYear': int(modeYear),
           'minSalePrice': minSalePrice, 'maxSalePrice': maxSalePrice, 'averageSalePrice': averageSalePrice, 'deviationSalePrice': deviationSalePrice,
           'minCommissionRate': minCommissionRate, 'maxCommissionRate': maxCommissionRate, 'averageCommissionRate': averageCommissionRate, 'deviationCommissionRate': deviationCommissionRate,
           'minCommissionEarned': minCommissionEarned, 'maxCommissionEarned': maxCommissionEarned, 'averageCommissionEarned': averageCommissionEarned, 'deviationCommissionEarned': deviationCommissionEarned,
-          'bestSales': bestSales, 'bestCustomers': bestCustomers, 'bestCarMakers': bestCarMakers, 'bestCarModels': bestCarMakers}
+          'bestSaler': bestSaler, 'bestCustomer': bestCustomer, 'bestCarMaker': bestCarMaker, 'bestCarModel': bestCarModel}
+
+answerDF = pd.DataFrame.from_dict(answer, orient='index').transpose()
+
+answerDF.to_csv('answer_5.csv', index=False)
+answerDF.to_pickle('answer_5.pkl')
+
+with open('answer_5.msgpack', 'wb') as fileMSG:
+    msgpack.dump(answer, fileMSG)
 
 with open('answer_5.json', 'w') as file:
     json.dump(answer, file)
+
+# msgpack: 467 bytes, csv: 564 bytes, json: 630 bytes, pkl: 1232 bytes

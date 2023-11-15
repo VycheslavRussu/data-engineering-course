@@ -1,0 +1,2 @@
+minYear,maxYear,modeYear,minSalePrice,maxSalePrice,averageSalePrice,deviationSalePrice,minCommissionRate,maxCommissionRate,averageCommissionRate,deviationCommissionRate,minCommissionEarned,maxCommissionEarned,averageCommissionEarned,deviationCommissionEarned,bestSaler,bestCustomer,bestCarMaker,bestCarModel
+2010,2022,2013,10000,50000,30014.3945008,11539.326657437125,0.0500001359597471,0.1499996589068419,0.09996718378874622,0.028859767005542335,503.33,7494.53,3000.640217744,1480.836947668269,Michael Smith,Michael Smith,Chevrolet,Silverado
