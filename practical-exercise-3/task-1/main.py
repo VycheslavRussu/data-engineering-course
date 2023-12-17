@@ -1,6 +1,6 @@
 import statistics
-
 from bs4 import BeautifulSoup
+import pandas as pd
 import json
 
 # Функция, которая парсит данные с html страницы и возвращает словарь с нужными данными
@@ -39,21 +39,19 @@ def pars_data(file_name):
 storage = list()
 
 # Вызов функции для каждого файла
-for i in range(1, 10):
+for i in range(1, 999):
     file_name = f'/Users/vycheslav/PycharmProjects/data-engineering-course/practical-exercise-3/task-1/zip_var_65/{i}.html'
     storage.append(pars_data(file_name))
 
 
-
-# # Сохраниение JSONa
-# json_storage = json.dumps(storage, ensure_ascii=False)
-# with open('data.json', 'w', encoding='UTF-8') as file:
-#     file.write(json_storage)
+# Сохраниение JSONa
+json_storage = json.dumps(storage, ensure_ascii=False)
+with open('data.json', 'w', encoding='UTF-8') as file:
+    file.write(json_storage)
 
 
 # Отсортированные по количеству туров данные
 sorted_by_rounds_storage = sorted(storage, key=lambda x: x['rounds_count'])
-print(sorted_by_rounds_storage)
 
 
 # Отфильтрованные по названию города данные
@@ -70,5 +68,6 @@ max_value = max(dict['views'] for dict in storage)
 mean_value = statistics.mean(dict['views'] for dict in storage)
 
 
-# Для одного текстового поля посчитайте частоту меток
-count_town = sum(dict['town'] == 'Овьедо' for dict in storage)
+# Для одного текстового поля (town) посчитайте частоту меток
+storage_df = pd.read_json('data.json')
+values_freq = storage_df['town'].value_counts()
