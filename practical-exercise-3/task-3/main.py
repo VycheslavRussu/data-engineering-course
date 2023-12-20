@@ -57,7 +57,7 @@ with open('data.json', 'w', encoding='UTF-8') as file:
 
 
 # Отсортированные по возрасту данные
-sorted_by_rounds_storage = sorted(storage, key=lambda x: x['age'])
+sorted_by_age_storage = sorted(storage, key=lambda x: x['age'])
 
 
 # Отфильтрованные по (rotation_days) данные
@@ -74,9 +74,9 @@ max_value = max(item['radius'] for item in storage)
 mean_value = statistics.mean(item['radius'] for item in storage)
 
 
-# Для одного текстового поля (radius) посчитайте частоту меток
+# Для одного текстового поля (spectral_class) посчитайте частоту меток
 storage_df = pd.read_json('data.json')
-values_freq = storage_df['radius'].value_counts()
+values_freq = storage_df['spectral_class'].value_counts()
 
 
 
