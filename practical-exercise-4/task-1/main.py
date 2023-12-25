@@ -35,17 +35,29 @@ def insert_to_db(db, data):
 items = parse_data('task_1_var_65_item.csv')
 db = connect_to_db('task_1.db')
 # insert_to_db(db, items)
-
-# Task 1
 number = 65+10
 cursor = db.cursor()
-result_1 = cursor.execute(f'''
+
+
+# Task 1
+query_1 = cursor.execute(f'''
     SELECT *
     FROM buildings
     ORDER BY year ASC
     LIMIT {number}
 ''')
-# print(result.fetchall())
+
+result_1 = query_1.fetchall()
+keys = [description[0] for description in cursor.description]
+
+result = list()
+for item in result_1:
+    result.append(dict(zip(keys, item)))
+
+json_data = json.dumps(result, ensure_ascii=False)
+with open('answer_1.json', 'w', encoding='UTF-8') as file:
+    file.write(json_data)
+
 
 # Task 2
 # вывод (сумму, мин, макс, среднее) по произвольному числовому полю;
@@ -71,8 +83,8 @@ df = pd.DataFrame(values_list_2)
 # print(df.value_counts())
 
 
-# Task 3
-result_3_query = cursor.execute(f'''
+# Task 4
+result_4_query = cursor.execute(f'''
     SELECT *
     FROM buildings
     WHERE parking == 'True'
@@ -80,13 +92,13 @@ result_3_query = cursor.execute(f'''
     LIMIT {number}
 ''')
 
-result_3 = result_3_query.fetchall()
+result_4 = result_4_query.fetchall()
 
 keys = [description[0] for description in cursor.description]
 result = list()
-for row in result_3:
+for row in result_4:
     result.append(dict(zip(keys, row)))
 
 json_data = json.dumps(result, ensure_ascii=False)
-with open('answer.json', 'w', encoding='UTF-8') as file:
+with open('answer_4.json', 'w', encoding='UTF-8') as file:
     file.write(json_data)
