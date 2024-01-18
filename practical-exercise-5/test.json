@@ -1,0 +1,13 @@
+[{
+  "key": "", 
+  "key1": {}
+},
+{
+  "key": "",
+  "key1": {}
+}]
+
+import json
+
+data = json.load('')
+data = json.dump('', )
